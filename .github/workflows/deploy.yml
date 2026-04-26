@@ -1,0 +1,36 @@
+name: Deploy to Cloudflare Pages
+
+on:
+  push:
+    branches: [master, main]
+  workflow_dispatch:
+
+jobs:
+  deploy-frontend:
+    name: Deploy Frontend → Cloudflare Pages
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Build static site
+        run: |
+          mkdir -p dist
+          # Inyectar API_URL del backend (Cloudflare Tunnel URL)
+          API_URL="${{ secrets.BACKEND_API_URL }}"
+          sed "s|window.__ENV_API_URL__ = ''|window.__ENV_API_URL__ = '${API_URL}'|g" \
+            frontend/static/config.js > dist/config.js || cp frontend/static/config.js dist/config.js
+          cp frontend/static/app.js dist/app.js
+          cp frontend/static/style.css dist/style.css
+          # index.html con rutas absolutas (Pages sirve desde raíz)
+          sed \
+            's|href="/static/style.css"|href="/style.css"|g;
+             s|src="/static/config.js"|src="/config.js"|g;
+             s|src="/static/app.js"|src="/app.js"|g' \
+            frontend/templates/index.html > dist/index.html
+
+      - name: Deploy to Cloudflare Pages
+        uses: cloudflare/wrangler-action@v3
+        with:
+          apiToken: ${{ secrets.CF_API_TOKEN }}
+          accountId: bb43bc541fea9da587a437e97f535c22
+          command: pages deploy dist --project-name=cannabis-maturity-ai --commit-dirty=true

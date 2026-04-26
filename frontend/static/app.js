@@ -1,4 +1,4 @@
-const API = '';
+const API = (typeof window !== 'undefined' && window.API_URL) ? window.API_URL : '';
 
 // ── Estado ──────────────────────────────────────────────────────────
 let lastPrediction = null;

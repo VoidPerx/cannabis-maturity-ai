@@ -1,0 +1,7 @@
+name = "cannabis-maturity-ai"
+compatibility_date = "2024-01-01"
+account_id = "bb43bc541fea9da587a437e97f535c22"
+pages_build_output_dir = "dist"
+
+[vars]
+APP_NAME = "Cannabis Maturity AI"
