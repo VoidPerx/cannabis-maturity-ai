@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Cannabis Maturity AI — UNAL</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="/static/style.css" />
+</head>
+<body>
+<div class="app-shell">
+
+  <header>
+    <span style="font-size:1.5rem">🌿</span>
+    <h1>Cannabis Maturity AI</h1>
+    <span class="badge">Beta</span>
+    <span style="margin-left:auto; color:#555; font-size:0.8rem">UNAL · Línea Cáñamo & Cannabis</span>
+  </header>
+
+  <!-- Stats bar -->
+  <div style="background:#111; border-bottom:1px solid #222; padding:0.75rem 2rem;">
+    <div id="stats-box" style="display:flex; gap:1rem; flex-wrap:wrap; align-items:center;">
+      <span style="color:#555; font-size:0.8rem">Cargando estadísticas…</span>
+    </div>
+  </div>
+
+  <div class="main-grid">
+
+    <!-- ── Sidebar: Upload + Form ── -->
+    <aside class="sidebar">
+      <div>
+        <p class="section-title" style="margin-bottom:.75rem">Analizar imagen</p>
+        <div id="drop-zone">
+          <div class="drop-icon">📷</div>
+          <p>Arrastra una foto o haz clic para seleccionar</p>
+          <small>JPG, PNG, WEBP • Tricomas o estigmas</small>
+        </div>
+        <input type="file" id="file-input" accept="image/*" style="display:none" />
+      </div>
+
+      <img id="img-preview" class="hidden" alt="Preview" />
+
+      <div style="display:flex; flex-direction:column; gap:0.75rem;">
+        <p class="section-title">Metadata (opcional)</p>
+        <div class="form-group">
+          <label>ID Planta</label>
+          <input id="plant-id" type="text" placeholder="ej. P-001" />
+        </div>
+        <div class="form-group">
+          <label>Variedad / Genotipo</label>
+          <input id="strain" type="text" placeholder="ej. OG Kush" />
+        </div>
+        <div class="form-group">
+          <label>Semana de floración</label>
+          <input id="week" type="number" min="1" max="16" placeholder="ej. 8" />
+        </div>
+      </div>
+
+      <div>
+        <button id="upload-btn" class="btn-primary" disabled>
+          🔬 Analizar madurez
+        </button>
+        <div id="spinner" class="hidden" style="margin-top:.75rem; justify-content:center;">
+          <div class="spin"></div>
+          <span>Analizando trichomas y estigmas…</span>
+        </div>
+      </div>
+
+      <!-- Guía de referencia -->
+      <div style="border:1px solid #222; border-radius:12px; padding:1rem;">
+        <p class="section-title" style="margin-bottom:.75rem">Guía de madurez</p>
+        <div style="display:flex; flex-direction:column; gap:0.5rem; font-size:0.82rem;">
+          <div>🌱 <strong style="color:#4ade80">Temprana</strong> — Estigmas blancos, tricomas claros</div>
+          <div>🌿 <strong style="color:#facc15">Media</strong> — Estigmas virando (~20-50% naranjos)</div>
+          <div>🌸 <strong style="color:#f97316">Tardía</strong> — Estigmas &gt;50% naranjos, ámbar &gt;30%</div>
+          <div>🌺 <strong style="color:#ef4444">Lista</strong> — Estigmas &gt;70% naranjos</div>
+        </div>
+        <p style="color:#555; font-size:0.72rem; margin-top:.75rem">
+          Basado en Lara et al. (2024) — estigmas son mejor predictor de madurez química que trichomas incluso con cámaras de gama baja.
+        </p>
+      </div>
+    </aside>
+
+    <!-- ── Content: Result ── -->
+    <main class="content">
+      <div id="result-box">
+        <div style="display:flex; flex-direction:column; align-items:center; justify-content:center; height:300px; color:#333; text-align:center;">
+          <div style="font-size:4rem;">🌿</div>
+          <p style="margin-top:1rem">Sube una imagen para comenzar el análisis</p>
+          <p style="font-size:0.8rem; color:#444; margin-top:.5rem">Soporta fotos de tricomas (macrofotografía) y estigmas (cualquier cámara)</p>
+        </div>
+      </div>
+    </main>
+
+  </div>
+</div>
+
+<script src="/static/app.js"></script>
+</body>
+</html>
